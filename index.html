@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thobile Sema - Cybersecurity Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Rajdhani', sans-serif;
+        }
+        
+        .font-orbitron {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-up {
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .slide-up.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .profile-glow {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+        
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #FFD700;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #374151;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .desktop-menu {
+                display: none;
+            }
+        }
+        
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors font-orbitron">TS</a>
+                <div class="desktop-menu space-x-6">
+                    <a href="#home" class="hover:text-yellow-400 transition-colors font-medium">Home</a>
+                    <a href="#journey" class="hover:text-yellow-400 transition-colors font-medium">Journey</a>
+                    <a href="#posts" class="hover:text-yellow-400 transition-colors font-medium">Posts</a>
+                </div>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="flex flex-col space-y-4 px-6 py-4">
+                    <a href="#home" class="hover:text-yellow-400 transition-colors font-medium" onclick="closeMobileMenu()">Home</a>
+                    <a href="#journey" class="hover:text-yellow-400 transition-colors font-medium" onclick="closeMobileMenu()">Journey</a>
+                    <a href="#posts" class="hover:text-yellow-400 transition-colors font-medium" onclick="closeMobileMenu()">Posts</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-6 relative">
+        <video autoplay muted loop class="video-bg">
+            <source src="https://cdn.pixabay.com/vimeo/465564358/binary-43728.mp4?width=1920&hash=e2b0c64d6a5b2e4b9e3ba1b9a4e8b5c4e2a3d6f8" type="video/mp4">
+            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="text-center fade-in relative z-10">
+            <div class="mb-8">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" 
+                     alt="Thobile Sema" 
+                     class="w-32 h-32 rounded-full mx-auto mb-6 profile-glow hover:scale-110 transition-transform duration-300">
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-yellow-400 bg-clip-text text-transparent font-orbitron">
+                Thobile Sema
+            </h1>
+            <h2 class="text-2xl md:text-3xl text-yellow-400 mb-8 font-light">
+                This is My Journey
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Welcome to my cybersecurity learning journey. I'm documenting every step, every challenge, 
+                and every breakthrough as I build my expertise in information security from the ground up.
+            </p>
+            <button onclick="scrollToSection('journey')" 
+                    class="gold-gradient text-black px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 pulse-gold font-orbitron">
+                Start Reading
+            </button>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section id="journey" class="py-20 bg-white text-black">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 slide-up font-orbitron">About My Journey</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="slide-up">
+                        <h3 class="text-2xl font-semibold mb-6 text-yellow-600">Why Cybersecurity?</h3>
+                        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                            In today's digital world, cybersecurity isn't just a career choice—it's a necessity. 
+                            I'm passionate about protecting digital assets and helping organizations stay secure 
+                            against evolving threats.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            This blog documents my learning process, from understanding basic security concepts 
+                            to mastering advanced penetration testing techniques.
+                        </p>
+                    </div>
+                    <div class="slide-up">
+                        <div class="bg-gray-100 p-6 rounded-lg">
+                            <h3 class="text-2xl font-semibold mb-4 text-yellow-600">Learning Path</h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                    Network Security Fundamentals
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                    Ethical Hacking & Penetration Testing
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                    Security Analysis & Incident Response
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                    Cloud Security & DevSecOps
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section id="posts" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 slide-up text-yellow-400 font-orbitron">Latest Posts</h2>
+            <div id="posts-container" class="max-w-4xl mx-auto">
+                <!-- Posts will be dynamically generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400 mb-4">© 2024 Thobile Sema. All rights reserved.</p>
+            <p class="text-gray-500">Building the future of cybersecurity, one post at a time.</p>
+        </div>
+    </footer>
+
+    <!-- Post Detail Modal -->
+    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white text-black max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-lg relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl z-10">
+                    ×
+                </button>
+                <div id="modal-content">
+                    <!-- Modal content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle mobile menu
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Function to close mobile menu
+        function closeMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+
+        // Blog posts data
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Starting My Cybersecurity Journey",
+                date: "2024-07-15",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
+                summary: "My first steps into the world of cybersecurity, setting up my learning environment and understanding the basics.",
+                content: `
+                    <h3 class="text-2xl font-bold mb-4">The Beginning</h3>
+                    <p class="mb-4">Today marks the beginning of my cybersecurity journey. After months of research and contemplation, I've decided to dive deep into the world of information security.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Why Cybersecurity?</h3>
+                    <p class="mb-4">The digital landscape is constantly evolving, and with it, the threats that organizations face. I'm passionate about being part of the solution, helping protect digital assets and ensuring secure systems.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">My Learning Plan</h3>
+                    <p class="mb-4">I've structured my learning path to cover:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Network security fundamentals</li>
+                        <li>Operating system security</li>
+                        <li>Ethical hacking techniques</li>
+                        <li>Security analysis and incident response</li>
+                    </ul>
+                    
+                    <p class="mb-4">This blog will serve as my documentation tool, tracking progress and sharing insights along the way.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Understanding Network Security Basics",
+                date: "2024-07-12",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+                summary: "Diving deep into network protocols, firewalls, and the OSI model - foundational knowledge for any cybersecurity professional.",
+                content: `
+                    <h3 class="text-2xl font-bold mb-4">Network Security Fundamentals</h3>
+                    <p class="mb-4">Understanding networks is crucial for cybersecurity. Today I explored the OSI model and how different layers contribute to security.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Key Learning Points</h3>
+                    <p class="mb-4">The OSI model provides a framework for understanding how network communications work:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Physical Layer:</strong> Hardware security considerations</li>
+                        <li><strong>Data Link Layer:</strong> MAC address security</li>
+                        <li><strong>Network Layer:</strong> IP security and routing</li>
+                        <li><strong>Transport Layer:</strong> TCP/UDP security</li>
+                        <li><strong>Application Layer:</strong> Application-specific security</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Firewalls and Access Control</h3>
+                    <p class="mb-4">Firewalls act as the first line of defense, controlling traffic based on predefined rules. I learned about different types:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Packet filtering firewalls</li>
+                        <li>Stateful inspection firewalls</li>
+                        <li>Application-level gateways</li>
+                        <li>Next-generation firewalls (NGFW)</li>
+                    </ul>
+                `
+            },
+            {
+                id: 3,
+                title: "Setting Up My Home Lab",
+                date: "2024-07-10",
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
+                summary: "Creating a safe environment for practicing cybersecurity skills with VirtualBox, Kali Linux, and vulnerable machines.",
+                content: `
+                    <h3 class="text-2xl font-bold mb-4">Building a Practice Environment</h3>
+                    <p class="mb-4">A hands-on approach is essential for learning cybersecurity. Today I set up my home lab for safe practice and experimentation.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Lab Components</h3>
+                    <p class="mb-4">My home lab includes:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>VirtualBox:</strong> Virtualization platform for isolated environments</li>
+                        <li><strong>Kali Linux:</strong> Penetration testing distribution</li>
+                        <li><strong>Metasploitable:</strong> Intentionally vulnerable Linux system</li>
+                        <li><strong>Windows VMs:</strong> Various Windows versions for testing</li>
+                        <li><strong>pfSense:</strong> Open-source firewall for network segmentation</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Safety First</h3>
+                    <p class="mb-4">Important considerations for a safe lab environment:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Isolated network segments</li>
+                        <li>No internet access for vulnerable machines</li>
+                        <li>Regular snapshots for easy recovery</li>
+                        <li>Proper documentation of all configurations</li>
+                    </ul>
+                    
+                    <p class="mb-4">This lab will be my playground for learning and practicing various cybersecurity techniques safely.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "First Steps in Ethical Hacking",
+                date: "2024-07-08",
+                image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
+                summary: "Learning the basics of ethical hacking methodology, reconnaissance techniques, and understanding the legal and ethical framework.",
+                content: `
+                    <h3 class="text-2xl font-bold mb-4">Introduction to Ethical Hacking</h3>
+                    <p class="mb-4">Ethical hacking is about finding vulnerabilities before the bad guys do. It's a structured approach to testing security defenses.</p>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">The Ethical Hacking Methodology</h3>
+                    <p class="mb-4">The process follows a systematic approach:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><strong>Reconnaissance:</strong> Information gathering about the target</li>
+                        <li><strong>Scanning:</strong> Identifying live systems and open ports</li>
+                        <li><strong>Enumeration:</strong> Gathering detailed information about services</li>
+                        <li><strong>Vulnerability Assessment:</strong> Identifying potential security weaknesses</li>
+                        <li><strong>Exploitation:</strong> Attempting to exploit identified vulnerabilities</li>
+                        <li><strong>Reporting:</strong> Documenting findings and recommendations</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-bold mb-4 mt-8">Legal and Ethical Considerations</h3>
+                    <p class="mb-4">Before any testing, it's crucial to understand:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li>Always get proper authorization</li>
+                        <li>Stay within the scope of engagement</li>
+                        <li>Respect privacy and confidentiality</li>
+                        <li>Follow responsible disclosure practices</li>
+                    </ul>
+                    
+                    <p class="mb-4">The goal is to improve security, not to cause harm or gain unauthorized access.</p>
+                `
+            }
+        ];
+
+        // Function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Function to generate blog posts
+        function generateBlogPosts() {
+            const container = document.getElementById('posts-container');
+            const sortedPosts = blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            container.innerHTML = sortedPosts.map(post => `
+                <article class="bg-white text-black rounded-lg overflow-hidden shadow-lg hover-lift mb-8 fade-in cursor-pointer"
+                         onclick="openPost(${post.id})">
+                    <div class="md:flex">
+                        <div class="md:w-1/3">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-2/3 p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-semibold mr-3">
+                                    ${formatDate(post.date)}
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 hover:text-yellow-600 transition-colors">${post.title}</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">${post.summary}</p>
+                            <div class="flex items-center text-yellow-600 font-semibold">
+                                <span>Read More</span>
+                                <span class="ml-2">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Function to open post modal
+        function openPost(postId) {
+            const post = blogPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            const modal = document.getElementById('post-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <div class="p-8">
+                    <img src="${post.image}" alt="${post.title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-semibold">
+                            ${formatDate(post.date)}
+                        </span>
+                    </div>
+                    <h1 class="text-4xl font-bold mb-6 text-gray-800">${post.title}</h1>
+                    <div class="prose max-w-none text-gray-700 leading-relaxed">
+                        ${post.content}
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to close modal
+        function closeModal() {
+            const modal = document.getElementById('post-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Function to scroll to section
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+                // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const hamburger = document.querySelector('.hamburger');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const nav = document.querySelector('nav');
+                
+                if (!nav.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+            
+            // Close mobile menu on window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            });
+        });
+        }, observerOptions);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            generateBlogPosts();
+            
+            // Observe elements for animations
+            document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Close modal on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            
+            // Close modal on background click
+            document.getElementById('post-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
